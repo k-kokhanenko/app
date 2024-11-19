@@ -15,16 +15,16 @@ export const Ticket = () => {
                 </header>
                 
                 <div className="ticket__info-wrapper">
-                    <p className="ticket__info">На фильм: <span className="ticket__details ticket__title">{filmName}</span></p>
-                    <p className="ticket__info">Места: 
+                    <div className="ticket__info">На фильм: <span className="ticket__details ticket__title">{filmName}</span></div>
+                    <div className="ticket__info">Места: 
                         <span className="ticket__details ticket__chairs">
                         {Object.entries(selectedSeats).map(([rowIndex, row]) => (
-                          <div>{row.split("-")[0]} ряд - {row.split("-")[1]} место</div>
+                          <div key={rowIndex}>{row.split("-")[0]} ряд - {row.split("-")[1]} место</div>
                         ))}
                         </span>
-                    </p>
-                    <p className="ticket__info">В зале: <span className="ticket__details ticket__hall">{hallName}</span></p>
-                    <p className="ticket__info">Начало сеанса: <span className="ticket__details ticket__start">{beginTime}</span></p>
+                    </div>
+                    <div className="ticket__info">В зале: <span className="ticket__details ticket__hall">{hallName}</span></div>
+                    <div className="ticket__info">Начало сеанса: <span className="ticket__details ticket__start">{beginTime}</span></div>
 
                     <div className='ticket__info-qr'>  
                         <QRCode
@@ -32,11 +32,11 @@ export const Ticket = () => {
                             value={ticketId}
                             bgColor="white"
                             fgColor=""
-                            size="200"
+                            size={200}
                         />
                     </div>
-                    <p className="ticket__hint">Покажите QR-код нашему контроллеру для подтверждения бронирования.</p>
-                    <p className="ticket__hint">Приятного просмотра!</p>
+                    <div className="ticket__hint">Покажите QR-код нашему контроллеру для подтверждения бронирования.</div>
+                    <div className="ticket__hint">Приятного просмотра!</div>
                 </div>
             </section>     
         </main>
