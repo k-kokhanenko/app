@@ -39,9 +39,9 @@ export const Hall = () => {
       alert(`Ошибка выполнения запроса: ${data.message}`);
     } else {
       setSeats(data.seats);
-      console.log(data.seats);
+      //console.log(data.seats);
     }      
-}
+  }
 
   useEffect(() => {
     getPriceData(hallId);
@@ -85,10 +85,10 @@ export const Hall = () => {
       <div className="buying-scheme">
         <div className="buying-scheme__wrapper">
           {Object.entries(seats).map(([rowIndex, row]) => (
-              <div key={rowIndex} className="buying-scheme__row"> 
+              <div className="buying-scheme__row" key={rowIndex}> 
               {
-                  Object.entries(row).map(([cellIndex, cell]) => <>
-                  <span 
+                  Object.entries(row).map(([cellIndex, cell]) => 
+                    <span 
                       key={`${rowIndex}-${cellIndex}`} 
                       className={`buying-scheme__chair ${
                         cell === 1 ? 'buying-scheme__chair_standart' : 
@@ -103,17 +103,17 @@ export const Hall = () => {
                           setSeats(copy);
                           setSelectedSeats([...selectedSeats, `${rowIndex}-${cellIndex}`]);
 
-                          if (cell == 1) {
+                          if (cell === 1) {
                             setTotalCost(totalCost + standartPrice);
                           } else
-                          if (cell == 2) {
+                          if (cell === 2) {
                             setTotalCost(totalCost + vipPrice);
                           } 
                         }
                       }}                      
                       >
                   </span>
-                  </>)   
+                  )   
               }
               </div>
           ))}
