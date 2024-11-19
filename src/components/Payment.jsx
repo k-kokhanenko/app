@@ -43,22 +43,22 @@ export const Payment = () => {
         </header>
         
         <div className="ticket__info-wrapper">
-          <p className="ticket__info">На фильм: <span className="ticket__details ticket__title">{filmName}</span></p>
-          <p className="ticket__info">Места: 
+          <div className="ticket__info">На фильм: <span className="ticket__details ticket__title">{filmName}</span></div>
+          <div className="ticket__info">Места: 
             <span className="ticket__details ticket__chairs">
             {Object.entries(selectedSeats).map(([rowIndex, row]) => (
-              <div>{row.split("-")[0]} ряд - {row.split("-")[1]} место</div>
+              <div key={rowIndex}>{row.split("-")[0]} ряд - {row.split("-")[1]} место</div>
             ))}
-            </span>
-          </p>
-          <p className="ticket__info">В зале: <span className="ticket__details ticket__hall">{hallName}</span></p>
-          <p className="ticket__info">Начало сеанса: <span className="ticket__details ticket__start">{beginTime}</span></p>
-          <p className="ticket__info">Стоимость: <span className="ticket__details ticket__cost">{totalCost}</span> рублей</p>
+            </span>          
+          </div>
+          <div className="ticket__info">В зале: <span className="ticket__details ticket__hall">{hallName}</span></div>
+          <div className="ticket__info">Начало сеанса: <span className="ticket__details ticket__start">{beginTime}</span></div>
+          <div className="ticket__info">Стоимость: <span className="ticket__details ticket__cost">{totalCost}</span> рублей</div>
 
           <button className="acceptin-button" onClick={handleTicket}>Получить код бронирования</button>
 
-          <p className="ticket__hint">После оплаты билет будет доступен в этом окне, а также придёт вам на почту. Покажите QR-код нашему контроллёру у входа в зал.</p>
-          <p className="ticket__hint">Приятного просмотра!</p>
+          <div className="ticket__hint">После оплаты билет будет доступен в этом окне, а также придёт вам на почту. Покажите QR-код нашему контроллёру у входа в зал.</div>
+          <div className="ticket__hint">Приятного просмотра!</div>
         </div>
       </section>     
     </main>
