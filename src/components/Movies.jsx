@@ -13,8 +13,8 @@ export const Movies = () => {
     if (data.result) {            
         setFilmsInfo(data.filmsInfo);
 
-        console.log('getNewFilmsInfo');
-        console.log(data.filmsInfo);
+        //console.log('getNewFilmsInfo');
+        //console.log(data.filmsInfo);
     }
   }
 
@@ -25,8 +25,8 @@ export const Movies = () => {
   return (
     <>
     {Object.keys(filmsInfo).map((key) => (
-        <section className="movie">
-          <div className="movie__info" key={key}>
+        <section className="movie" key={key}>
+          <div className="movie__info">
             <div className="movie__poster">
               <img className="movie__poster-image" alt={filmsInfo[key].name} src="i/poster1.jpg"/>
             </div>
@@ -46,8 +46,8 @@ export const Movies = () => {
               <ul className="movie-seances__list">
 
               {filmsInfo[key].halls[key2].beginTimes.map((item, index) => (                
-                  <li className="movie-seances__time-block">
-                    <Link to="/hall" state={{ 
+                  <li className="movie-seances__time-block" key={index}>
+                    <Link className="movie-seances__time" to="/hall" state={{ 
                         filmName: filmsInfo[key].name, 
                         filmId: filmsInfo[key].id,
                         hallId: key2,
@@ -56,7 +56,7 @@ export const Movies = () => {
                         sessionId : filmsInfo[key].halls[key2].sessionsId[index]
                       }}
                     > 
-                      <a className="movie-seances__time" href="#">{item}</a>
+                      {item}
                     </Link>
                   </li>
               ))}
