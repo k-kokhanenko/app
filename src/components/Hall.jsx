@@ -2,6 +2,8 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+let  initSeats = {};
+
 export const Hall = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -11,8 +13,8 @@ export const Hall = () => {
   const [vipPrice, setVipPrice] = useState(0);
   const [totalCost, setTotalCost] = useState(0);
   const [seats, setSeats] = useState([]);
-  const [selectedSeats, setSelectedSeats] = useState([]);
-  
+  //const [selectedSeats, setSelectedSeats] = useState([]);
+     
   // Получаем по id зала цены
   const getPriceData = async (hallId) => {
     const response = await fetch(`http://phpsitechecker.ru/prices/${hallId}/`, {
@@ -39,7 +41,7 @@ export const Hall = () => {
       alert(`Ошибка выполнения запроса: ${data.message}`);
     } else {
       setSeats(data.seats);
-      //console.log(data.seats);
+      initSeats = JSON.parse(JSON.stringify(data.seats));
     }      
   }
 
@@ -48,11 +50,17 @@ export const Hall = () => {
     getSeatsData(hallId);
   }, []);
 
-  // cell == 3 - disabled
-  // cell == 4 - selected
-  // cell == 4 - taken
-  
-  const handlePayment = () => {        
+  const handlePayment = () => {     
+    let selectedSeats = [];
+    for (let key in seats) {
+      let subObj = seats[key];
+      for (let subKey in subObj) {
+        if (seats[key][subKey] == 5) {
+          selectedSeats.push(`${key}-${subKey}`);
+        }
+      }
+    }    
+
     if (!selectedSeats.length) {
       alert('Отметьте места для бронирования');
       return;
@@ -94,21 +102,25 @@ export const Hall = () => {
                         cell === 1 ? 'buying-scheme__chair_standart' : 
                         cell === 2 ? 'buying-scheme__chair_vip' : 
                         cell === 3 ? 'buying-scheme__chair_disabled' : 
-                        cell === 4 ? 'buying-scheme__chair_selected' : 'buying-scheme__chair_taken'
+                        cell === 4 ? 'buying-scheme__chair_taken' : 'buying-scheme__chair_selected'
                       }`}
                       onClick={(e) => { 
-                        if (cell !== 3) {
-                          let copy = Object.assign([], seats);
-                          copy[rowIndex][cellIndex] = 4;                                                                                                    
-                          setSeats(copy);
-                          setSelectedSeats([...selectedSeats, `${rowIndex}-${cellIndex}`]);
+                        let ticketType = '';
+                        if (initSeats[rowIndex][cellIndex] == 1) ticketType = 1;
+                        if (initSeats[rowIndex][cellIndex] == 2) ticketType = 2;
 
-                          if (cell === 1) {
-                            setTotalCost(totalCost + standartPrice);
+                        if (cell !== 3 && cell !== 4) {
+                          let copy = Object.assign([], seats);
+                          let p = copy[rowIndex][cellIndex] !== 5 ? 1 : -1;
+                          copy[rowIndex][cellIndex] = (copy[rowIndex][cellIndex] !== 5) ? 5 : ticketType;                                                   
+                          setSeats(copy);
+
+                          if (ticketType === 1) {
+                            setTotalCost(totalCost + p * standartPrice);
                           } else
-                          if (cell === 2) {
-                            setTotalCost(totalCost + vipPrice);
-                          } 
+                          if (ticketType === 2) {
+                            setTotalCost(totalCost + p * vipPrice);
+                          }                           
                         }
                       }}                      
                       >
