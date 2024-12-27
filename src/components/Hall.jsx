@@ -7,7 +7,7 @@ let  initSeats = {};
 export const Hall = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { filmName, filmId, hallId, hallName, beginTime, sessionId } = location.state;
+  const { filmName, filmId, hallId, hallName, beginTime, sessionId, selectedDay } = location.state;
 
   const [standartPrice, setStandartPrice] = useState(0);
   const [vipPrice, setVipPrice] = useState(0);
@@ -32,7 +32,7 @@ export const Hall = () => {
 
   // Получаем по id кинозала сетку 
   const getSeatsData = async (hallId) => {
-    const response = await fetch(`http://phpsitechecker.ru/seatsTickets/${hallId}/${sessionId}/`, {
+    const response = await fetch(`http://phpsitechecker.ru/seatsTickets/${hallId}/${sessionId}/${selectedDay}/`, {
       method : "GET",
     });
     const data = await response.json();
@@ -71,6 +71,7 @@ export const Hall = () => {
       totalCost : totalCost,
       beginTime: beginTime,
       filmId: filmId,
+      selectedDay: selectedDay,
       filmName: filmName,
       hallName: hallName,
       hallId: hallId,
