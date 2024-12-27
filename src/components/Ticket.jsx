@@ -5,7 +5,7 @@ import QRCode from 'react-qr-code';
 
 export const Ticket = () => {
     const location = useLocation();
-    const { ticketId, filmName, selectedSeats, beginTime, hallName } = location.state;
+    const { ticketId, filmName, selectedSeats, beginTime, hallName, selectedDay } = location.state;
 
     return (
         <main>
