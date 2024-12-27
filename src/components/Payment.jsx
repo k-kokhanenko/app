@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 export const Payment = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { selectedSeats, totalCost, beginTime, filmName, hallName, hallId, filmId } = location.state;
+  const { selectedSeats, totalCost, beginTime, filmName, hallName, hallId, filmId, selectedDay } = location.state;
 
   const addNewTickets = async () => {
     const response = await fetch(`http://phpsitechecker.ru/tickets/`, {
@@ -13,7 +13,7 @@ export const Payment = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ hallId, filmId, beginTime, selectedSeats, totalCost })
+        body: JSON.stringify({ hallId, filmId, beginTime, selectedSeats, totalCost, selectedDay })
     });
 
     const data = await response.json();
@@ -26,6 +26,7 @@ export const Payment = () => {
           beginTime: beginTime,
           filmName: filmName,
           hallName: hallName,
+          selectedDay: selectedDay,
           ticketId: data.ticketId
         }});
     } 
